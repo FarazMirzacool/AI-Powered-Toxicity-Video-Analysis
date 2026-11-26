@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ToxGuard — Pre-Publish Video Toxicity Check</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-mark">◉</span>
+      <span class="logo-text">ToxGuard</span>
+    </div>
+    <p class="tagline">Check your video for toxicity before you post it.</p>
+  </header>
+
+  <!-- ============ LANDING / UPLOAD ============ -->
+  <main id="landing" class="view active">
+    <section class="hero">
+      <h1>Will your video get <span class="accent">flagged?</span></h1>
+      <p class="sub">
+        Upload a video and we'll scan the transcript, audio tone, and visuals
+        for toxicity — then tell you if it's safe to post on YouTube, TikTok,
+        Instagram, and X.
+      </p>
+
+      <div id="dropzone" class="dropzone">
+        <input type="file" id="fileInput" accept="video/*" hidden />
+        <div class="dz-icon">⬆</div>
+        <p class="dz-title">Drop your video here or <span class="link">browse</span></p>
+        <p class="dz-sub">MP4, MOV, WebM — up to 500 MB</p>
+      </div>
+
+      <div class="platforms">
+        <label class="chk"><input type="checkbox" checked data-platform="youtube" /> YouTube</label>
+        <label class="chk"><input type="checkbox" checked data-platform="tiktok" /> TikTok</label>
+        <label class="chk"><input type="checkbox" checked data-platform="instagram" /> Instagram</label>
+        <label class="chk"><input type="checkbox" checked data-platform="x" /> X</label>
+      </div>
+
+      <p class="disclaimer">
+        ⚠ Advisory tool only. Results are simulated for demo purposes and do not
+        guarantee any platform's moderation outcome.
+      </p>
+    </section>
+
+    <section class="samples">
+      <h2>Try a sample</h2>
+      <p class="samples-sub">No upload needed — click one to see a pre-computed report.</p>
+      <div class="sample-grid" id="sampleGrid"><!-- filled by JS --></div>
+    </section>
+  </main>
+
+  <!-- ============ ANALYZING VIEW ============ -->
+  <section id="analyzing" class="view">
+    <div class="analyze-box">
+      <h2>Analyzing your video…</h2>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <p class="stage" id="stageText">Preparing…</p>
+      <ul class="stage-list" id="stageList"></ul>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS VIEW ============ -->
+  <section id="results" class="view">
+    <button class="back-btn" id="backBtn">← Check another video</button>
+
+    <div class="verdict-card" id="verdictCard">
+      <div class="verdict-left">
+        <div class="verdict-badge" id="verdictBadge">—</div>
+        <div>
+          <h2 id="verdictTitle">—</h2>
+          <p id="verdictSub">—</p>
+        </div>
+      </div>
+      <div class="verdict-score">
+        <span class="score-num" id="scoreNum">0</span>
+        <span class="score-label">toxicity score</span>
+      </div>
+    </div>
+
+    <div class="platform-row" id="platformRow"><!-- filled by JS --></div>
+
+    <div class="results-grid">
+      <!-- LEFT: player + timeline -->
+      <div class="player-col">
+        <div class="video-wrap">
+          <video id="video" controls playsinline></video>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-labels">
+            <span>0:00</span>
+            <span id="durLabel">0:00</span>
+          </div>
+          <div class="heatmap" id="heatmap">
+            <div class="playhead" id="playhead"></div>
+            <div class="markers" id="markers"></div>
+          </div>
+          <p class="timeline-hint">Red = flagged segment. Click to jump.</p>
+        </div>
+      </div>
+
+      <!-- RIGHT: flags + recommendations -->
+      <div class="side-col">
+        <div class="panel">
+          <h3>Flagged segments <span class="count-pill" id="flagCount">0</span></h3>
+          <div class="flags" id="flagsList"></div>
+        </div>
+
+        <div class="panel">
+          <h3>Recommended fixes</h3>
+          <ul class="recs" id="recsList"></ul>
+        </div>
+
+        <button class="export-btn" id="exportBtn">⬇ Export report</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>ToxGuard — AI-powered toxic video analysis</p>
+  </footer>
+
+  <script src="js/analyzer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
